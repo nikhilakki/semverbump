@@ -40,3 +40,7 @@ verbump patch # x.x.1
 poetry install
 poetry run tox
 ```
+
+> Author - [Nikhil Akki](https://nikhilakki.in/about)
+
+> Personal Blog - [nikhilakki.in](https://nikhilakki.in)
