@@ -1,6 +1,6 @@
-# VerBump
+# SemVerBump
 
-### VerBump or Version Bump is a CLI tool that auto-bumps version for your application.
+### SemVerBump or Semantic Version Bump is a CLI tool that auto-bumps version for your application.
 
 __Currently supports__
 
@@ -20,7 +20,7 @@ Example -
 [tool.poetry]
 version="0.1.0"
 ```
-_Caveat - version attribute should be at top level key/val_
+_Caveat - version attribute should be at top level in the file._
 
 ## Install
 
@@ -40,6 +40,16 @@ verbump patch # x.x.1
 poetry install
 poetry run tox
 ```
+
+## Supported Python Runtime
+- 3.10 and above
+## Roadmap
+- [✅] - SemVer support
+- [✅] - No additional dependencies (Python Standard Libary only)
+- [✅] - Tested with PyProject.toml & Package.json (NodeJS), it should work with any JSON / TOML file if in the format given above.
+- [TBD] - Auto Git commits and Tags
+
+
 
 > Author - [Nikhil Akki](https://nikhilakki.in/about)
 
