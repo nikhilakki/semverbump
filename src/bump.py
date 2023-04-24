@@ -2,7 +2,7 @@ import json
 import tomllib
 from enum import Enum
 from typing import Union
-from src.config import VERSION_FILE_PATH, VERSION_KEY
+from config import VERSION_FILE_PATH, VERSION_KEY
 
 
 class UpdateType(Enum):
