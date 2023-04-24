@@ -21,3 +21,22 @@ Example -
 version="0.1.0"
 ```
 _Caveat - version attribute should be at top level key/val_
+
+## Install
+
+```bash
+pip install verbump
+```
+
+## Quick start
+```bash
+verbump # <command>
+verbump major # 1.x.x
+verbump minor # x.1.x
+verbump patch # x.x.1
+```
+## Running tests
+```bash
+poetry install
+poetry run tox
+```

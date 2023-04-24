@@ -1,11 +1,11 @@
-import sys
+# import sys
 
-sys.path.append(sys.path[0] + "/..")
+# sys.path.append(sys.path[0] + "/..")
+import os
+from verbump import bump
 
-from src import bump
-
-JSON_FILE = "sample.json"
-TOML_FILE = "sample.toml"
+JSON_FILE = os.path.join("tests", "sample.json")
+TOML_FILE = os.path.join("tests", "sample.toml")
 
 
 def test_file_loader_json() -> None:
@@ -25,7 +25,7 @@ def test_read_version_file_toml() -> None:
 
 
 def test_read_version_file_invalid() -> None:
-    assert bump.read_version_file("invalid.md") == None
+    assert bump.read_version_file("invalid.md") is None
 
 
 def test_bump_helper_major() -> None:
@@ -63,9 +63,9 @@ def test_bump_version_write_to_file() -> None:
     version_object = {"version": "1.0.0"}
     assert (
         bump.bump_version(version_object, bump.UpdateType.MINOR, write_to_disk=True)
-        == None
+        is None
     )
 
 
 def test_write_to_file() -> None:
-    assert bump.write_to_file({"version": "1.2.9"}, "sample.json") == None
+    assert bump.write_to_file({"version": "1.2.9"}, "sample.json") is None

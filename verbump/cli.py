@@ -1,6 +1,6 @@
 import argparse
-from bump import bump_version, UpdateType, read_version_file
-from config import VERSION_FILE_PATH, VERSION_KEY
+from verbump.bump import bump_version, UpdateType, read_version_file
+from verbump.config import VERSION_FILE_PATH, VERSION_KEY
 
 
 def main():
