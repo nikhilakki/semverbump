@@ -1,7 +1,3 @@
-{
-    "project": {
-        "name": "semverbump",
-        "version": "1.0.2"
-    },
-    "version": "1.0.3"
-}
+[project]
+name = "bump"
+version = "1.2.3"
