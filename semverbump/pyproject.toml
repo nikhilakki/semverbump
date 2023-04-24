@@ -1,3 +1,7 @@
-[project]
-name = "semverbump"
-version = "1.0.2"
+{
+    "project": {
+        "name": "semverbump",
+        "version": "1.0.2"
+    },
+    "version": "1.0.3"
+}
