@@ -56,16 +56,14 @@ def load_toml(file_name: str):
     return version_data
 
 
-def dump_json(file_name: str):
+def dump_json(version_data: dict, file_name: str):
     with open(file_name, "r") as f:
-        version_data = json.dump(f)
-    return version_data
+        json.dump(f, version_data)
 
 
-def dump_toml(file_name: str):
+def dump_toml(version_data: dict, file_name: str):
     with open(file_name, "rb") as f:
-        version_data = tomllib.dump(f)
-    return version_data
+        tomllib.dump(f, version_data)
 
 
 def get_version_from_dict(d: dict, version_path: str) -> str:
