@@ -56,12 +56,35 @@ def load_toml(file_name: str):
     return version_data
 
 
+def dump_json(file_name: str):
+    with open(file_name, "r") as f:
+        version_data = json.dump(f)
+    return version_data
+
+
+def dump_toml(file_name: str):
+    with open(file_name, "r") as f:
+        version_data = tomllib.dumps(f.write())
+    return version_data
+
+
 def get_version_from_dict(d: dict, version_path: str) -> str:
     keys = version_path.split(".")
     value = d
     for key in keys:
         value = value[key]
     return value
+
+
+def run_bump(version_data: dict, version_path: str, bump: str):
+    current_version = get_version_from_dict(version_data, version_path)
+    # Bump the version
+    new_version = bump_version(current_version, bump)
+    # Update the version in the file
+    version_data["version"] = new_version
+    # Commit and tag changes
+    commit_and_tag(f"Version Updated to {new_version}", f"v{new_version}")
+    return version_data
 
 
 def main():
@@ -97,26 +120,15 @@ def main():
     file_path = args.version_file
     match file_path.split(".")[-1].lower():
         case "json":
-            version_data = load_json(file_path)
+            version_data = run_bump(load_json(file_path), args.version_path, args.bump)
+            dump_json(version_data)
         case "toml":
-            version_data = load_toml(file_path)
+            version_data = run_bump(load_toml(file_path), args.version_path, args.bump)
+            dump_toml(version_data)
         case _:
             print("Invalid format (json or toml supported!)")
     # Load the current version from the file
     print(f"{version_data=}")
-
-    current_version = get_version_from_dict(version_data, args.version_path)
-
-    # Bump the version
-    new_version = bump_version(current_version, args.bump)
-
-    # Update the version in the file
-    version_data["version"] = new_version
-    with open(args.version_file, "w") as f:
-        json.dump(version_data, f, indent=4)
-
-    # Commit and tag changes
-    commit_and_tag(f"Version Updated to {new_version}", f"v{new_version}")
 
 
 if __name__ == "__main__":
