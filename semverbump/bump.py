@@ -51,8 +51,8 @@ def load_json(file_name: str):
 
 
 def load_toml(file_name: str):
-    with open(file_name, "rb") as f:
-        version_data = tomllib.load(f)
+    with open(file_name, "r") as f:
+        version_data = tomllib.loads(f.read())
     return version_data
 
 
