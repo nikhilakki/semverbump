@@ -57,12 +57,12 @@ def load_toml(file_name: str):
 
 
 def dump_json(version_data: dict, file_name: str):
-    with open(file_name, "rb") as f:
+    with open(file_name, "w") as f:
         json.dump(version_data, f)
 
 
 def dump_toml(version_data: dict, file_name: str):
-    with open(file_name, "r") as f:
+    with open(file_name, "w") as f:
         f.write(tomllib.dumps(version_data))
 
 
