@@ -6,6 +6,7 @@
 import argparse
 import json
 import subprocess
+import tomllib
 
 
 def bump_version(current_version, bump_type):
@@ -43,11 +44,31 @@ def has_uncommitted_changes():
     )
 
 
+def load_json(file_name: str):
+    with open(file_name, "r") as f:
+        version_data = json.load(f)
+    return version_data
+
+
+def load_toml(file_name: str):
+    with open(file_name, "r") as f:
+        version_data = tomllib.loads(f.read())
+    return version_data
+
+
+def get_version_from_dict(d: dict, version_path: str) -> str:
+    keys = version_path.split(".")
+    value = d
+    for key in keys:
+        value = value[key]
+    return value
+
+
 def main():
     # Check for uncommitted changes
-    if has_uncommitted_changes():
-        print("Error: there are uncommitted changes in the repository")
-        exit(1)
+    # if has_uncommitted_changes():
+    #     print("Error: there are uncommitted changes in the repository")
+    #     exit(1)
 
     # Parse command-line arguments
     parser = argparse.ArgumentParser(
@@ -61,15 +82,30 @@ def main():
 
     parser.add_argument(
         "--version-file",
+        "-vf",
         help="the JSON or TOML file containing the current version",
-        default="version.json",
+        default="package.json",
+    )
+    parser.add_argument(
+        "--version-path",
+        "-vp",
+        help="the JSON or TOML file containing the current version",
+        default="project.version",
     )
     args = parser.parse_args()
 
+    file_path = args.version_file
+    match file_path.split(".")[-1].lower():
+        case "json":
+            version_data = load_json(file_path)
+        case "toml":
+            version_data = load_toml(file_path)
+        case _:
+            print("Invalid format (json or toml supported!)")
     # Load the current version from the file
-    with open(args.version_file, "r") as f:
-        version_data = json.load(f)
-    current_version = version_data["version"]
+    print(f"{version_data=}")
+
+    current_version = get_version_from_dict(version_data, args.version_path)
 
     # Bump the version
     new_version = bump_version(current_version, args.bump)
