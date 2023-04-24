@@ -1,6 +1,6 @@
-# SemVerBump
+# Semsemverbump
 
-### SemVerBump or Semantic Version Bump is a CLI tool that auto-bumps version for your application.
+### Semsemverbump or Semantic Version Bump is a CLI tool that auto-bumps version for your application.
 
 __Currently supports__
 
@@ -25,15 +25,15 @@ _Caveat - version attribute should be at top level in the file._
 ## Install
 
 ```bash
-pip install verbump
+pip install semverbump
 ```
 
 ## Quick start
 ```bash
-verbump # <command>
-verbump major # 1.x.x
-verbump minor # x.1.x
-verbump patch # x.x.1
+semverbump # <command>
+semverbump major # 1.x.x
+semverbump minor # x.1.x
+semverbump patch # x.x.1
 ```
 ## Running tests
 ```bash

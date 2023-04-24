@@ -2,7 +2,7 @@
 
 # sys.path.append(sys.path[0] + "/..")
 import os
-from verbump import bump
+from semverbump import bump
 
 JSON_FILE = os.path.join("tests", "sample.json")
 TOML_FILE = os.path.join("tests", "sample.toml")

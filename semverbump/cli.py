@@ -1,6 +1,6 @@
 import argparse
-from verbump.bump import bump_version, UpdateType, read_version_file
-from verbump.config import VERSION_FILE_PATH, VERSION_KEY
+from semverbump.bump import bump_version, UpdateType, read_version_file
+from semverbump.config import VERSION_FILE_PATH, VERSION_KEY
 
 
 def main():
@@ -26,7 +26,7 @@ def main():
             case "patch":
                 bump_version(version_object, UpdateType.PATCH)
             case _:
-                print("Invalid command!! Choose from MAJOR|MINOR|PATCH") 
+                print("Invalid command!! Choose from MAJOR|MINOR|PATCH")
     else:
         print("Env vars not configured!")
 

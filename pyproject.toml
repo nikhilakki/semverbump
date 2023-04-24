@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "verbump"
+name = "semverbump"
 version = "0.1.0"
 description = "A CLI tool that auto-bumps version number for your app."
 authors = ["Nikhil Akki <17634231+nikhilakki@users.noreply.github.com >"]
