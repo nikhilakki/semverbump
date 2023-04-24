@@ -62,7 +62,7 @@ def dump_json(version_data: dict, file_name: str):
 
 
 def dump_toml(version_data: dict, file_name: str):
-    with open(file_name, "w") as f:
+    with open(file_name, "wb") as f:
         tomllib.dump(version_data, f)
 
 
