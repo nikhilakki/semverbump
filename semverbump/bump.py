@@ -119,13 +119,10 @@ def main():
     match file_path.split(".")[-1].lower():
         case "json":
             version_data = run_bump(load_json(file_path), args.version_path, args.bump)
-            dump_json(version_data)
+            dump_json(version_data, version_data)
         case "toml":
-            print(f"{file_path=}")
-            data = load_toml(file_path)
-            print(f"{data=}")
-            version_data = run_bump(data, args.version_path, args.bump)
-            dump_toml(version_data)
+            version_data = run_bump(load_toml(file_path), args.version_path, args.bump)
+            dump_toml(version_data, version_data)
         case _:
             print("Invalid format (json or toml supported!)")
     # Load the current version from the file
