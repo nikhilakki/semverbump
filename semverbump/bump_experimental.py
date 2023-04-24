@@ -58,8 +58,7 @@ def main():
         choices=["major", "minor", "patch"],
         help="the type of version bump to perform",
     )
-    parser.add_argument("message", help="the commit message")
-    parser.add_argument("tag", help="the tag name")
+
     parser.add_argument(
         "--version-file",
         help="the JSON or TOML file containing the current version",
@@ -81,7 +80,7 @@ def main():
         json.dump(version_data, f, indent=4)
 
     # Commit and tag changes
-    commit_and_tag(args.message, args.tag)
+    commit_and_tag(f"Version Updated to {new_version}", f"v{new_version}")
 
 
 if __name__ == "__main__":
