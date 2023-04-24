@@ -63,8 +63,8 @@ def dump_json(file_name: str):
 
 
 def dump_toml(file_name: str):
-    with open(file_name, "r") as f:
-        version_data = tomllib.dumps(f.write())
+    with open(file_name, "rb") as f:
+        version_data = tomllib.dump(f)
     return version_data
 
 
