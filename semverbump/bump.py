@@ -82,9 +82,9 @@ def run_bump(version_data: dict, version_path: str, bump: str):
 
 def main():
     # Check for uncommitted changes
-    # if has_uncommitted_changes():
-    #     print("Error: there are uncommitted changes in the repository")
-    #     exit(1)
+    if has_uncommitted_changes():
+        print("Error: there are uncommitted changes in the repository")
+        exit(1)
 
     # Parse command-line arguments
     parser = argparse.ArgumentParser(
@@ -98,13 +98,13 @@ def main():
 
     parser.add_argument(
         "--version-file",
-        "-vf",
+        "-f",
         help="the JSON or TOML file containing the current version",
         default="package.json",
     )
     parser.add_argument(
         "--version-path",
-        "-vp",
+        "-p",
         help="the JSON or TOML file containing the current version",
         default="version",
     )
