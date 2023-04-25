@@ -76,8 +76,8 @@ def run_bump(version_data: dict, version_path: str, bump: str):
     # Update the version in the file
     version_data["version"] = new_version
     # Commit and tag changes
-    commit_and_tag(f"Version Updated to {new_version}", f"v{new_version}")
-    return version_data
+
+    return version_data, new_version
 
 
 def main():
@@ -113,15 +113,20 @@ def main():
     file_path = args.version_file
     match file_path.split(".")[-1].lower():
         case "json":
-            version_data = run_bump(load_json(file_path), args.version_path, args.bump)
+            version_data, new_version = run_bump(
+                load_json(file_path), args.version_path, args.bump
+            )
             dump_json(version_data, file_path)
         case "toml":
-            version_data = run_bump(load_toml(file_path), args.version_path, args.bump)
+            version_data, new_version = run_bump(
+                load_toml(file_path), args.version_path, args.bump
+            )
             print("Toml files are not fully supported (yet)")
         case _:
             print("Invalid format (json or toml supported!)")
     # Load the current version from the file
     print(f"{version_data=}")
+    commit_and_tag(f"Version Updated to {new_version}", f"v{new_version}")
 
 
 if __name__ == "__main__":
