@@ -114,7 +114,7 @@ def main():
     match file_path.split(".")[-1].lower():
         case "json":
             version_data = run_bump(load_json(file_path), args.version_path, args.bump)
-            dump_json(version_data, version_data)
+            dump_json(version_data, file_path)
         case "toml":
             version_data = run_bump(load_toml(file_path), args.version_path, args.bump)
             print("Toml files are not fully supported (yet)")
