@@ -1,26 +1,20 @@
-# Semsemverbump
+# SemVerbump
 
-### Semsemverbump or Semantic Version Bump is a CLI tool that auto-bumps version for your application.
+### SemVerbump or Semantic Version Bump is a CLI tool that auto-bumps version for your application.
 
 __Currently supports__
 
 - JSON
-- TOML
 
-Example - 
+**Example** -
 
 - package.json
 ```json
 {
-	"version": "0.1.1"
+  "version": "0.1.1"
 }
 ```
-- pyproject.toml
-```toml
-[tool.poetry]
-version="0.1.0"
-```
-_Caveat - version attribute should be at top level in the file._
+_Caveat - version attribute should be in an object and not in a list._
 
 ## Install
 
@@ -30,26 +24,35 @@ pip install semverbump
 
 ## Quick start
 ```bash
-semverbump # <command>
+# version file and path defaults to `package.json` and `version` key
+semverbump # <command> major | minor | patch
 semverbump major # 1.x.x
 semverbump minor # x.1.x
 semverbump patch # x.x.1
 ```
-## Running tests
+## Custom version file and path
 ```bash
-poetry install
-poetry run tox
+semverbump --version-file app-version.json --version-path project.version minor
 ```
 
-## Supported Python Runtime
-- 3.10 and above
+```json
+// app-version.json
+{
+  "project": {
+    "name": "SuperApp",
+    "version": "1.0.2"
+  }
+}
+```
+
+## Supported Runtime
+- Python 3.9+
 ## Roadmap
-- [✅] - SemVer support
-- [✅] - No additional dependencies (Python Standard Libary only)
-- [✅] - Tested with PyProject.toml & Package.json (NodeJS), it should work with any JSON / TOML file if in the format given above.
-- [TBD] - Auto Git commits and Tags
-
-
+- [✅] SemVer support
+- [✅] No additional dependencies (Python Standard Libary only)
+- [✅] Tested with JSON based configs, it should work with any JSON file if in the format given above.
+- [✅] Auto Git commits and Tags
+- [❓] Add support for more file formats like YAML and TOML
 
 > Author - [Nikhil Akki](https://nikhilakki.in/about)
 

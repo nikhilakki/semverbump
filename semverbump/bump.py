@@ -1,69 +1,130 @@
+# Copyright (c) 2023 Nikhil Akki
+#
+# This software is released under the MIT License.
+# https://opensource.org/licenses/MIT
+
+import argparse
 import json
-import tomllib
-from enum import Enum
-from typing import Union
-from semverbump.config import VERSION_FILE_PATH, VERSION_KEY
+import subprocess
+from typing import Dict, Any, Tuple
 
 
-class UpdateType(Enum):
-    MAJOR = 0
-    MINOR = 1
-    PATCH = 2
+def bump_version(current_version: str, bump_type: str) -> str:
+    version_parts = [int(part) for part in current_version.split(".")]
+    if bump_type == "major":
+        version_parts[0] += 1
+        version_parts[1] = 0
+        version_parts[2] = 0
+    elif bump_type == "minor":
+        version_parts[1] += 1
+        version_parts[2] = 0
+    elif bump_type == "patch":
+        version_parts[2] += 1
+    new_version = ".".join(str(part) for part in version_parts)
+    return new_version
 
 
-def _file_loader(file_path: str) -> str:
-    with open(file_path, "r", encoding="utf-8") as f:
-        version_file = f.read()
-    return version_file
+def commit_and_tag(commit_message: str, tag_name: str) -> None:
+    # Stage all changes
+    subprocess.run(["git", "add", "-A"])
+
+    # Create the commit
+    subprocess.run(["git", "commit", "-m", commit_message])
+
+    # Create the tag
+    subprocess.run(["git", "tag", "-a", tag_name, "-m", commit_message])
 
 
-def read_version_file(file_path: str) -> dict | None:
-    version_file_ext = file_path.split(".")[-1].lower()
-    match version_file_ext:
+def has_uncommitted_changes() -> bool:
+    return (
+        subprocess.run(
+            ["git", "diff", "--exit-code"], stdout=subprocess.PIPE
+        ).returncode
+        == 1
+    )
+
+
+def load_json(file_name: str) -> Dict[str, Any]:
+    with open(file_name, "r") as f:
+        version_data = json.load(f)
+    return version_data
+
+
+def dump_json(version_data: dict, file_name: str) -> None:
+    with open(file_name, "w") as f:
+        f.write(json.dumps(version_data))
+
+
+def get_version_from_dict(d: dict, version_path: str) -> str:
+    keys = version_path.split(".")
+    value = d
+    for key in keys:
+        value = value[key]
+    return str(value)
+
+
+def run_bump(
+    version_data: dict, version_path: str, bump: str
+) -> Tuple[Dict[str, Any], str]:
+    current_version = get_version_from_dict(version_data, version_path)
+    print(f"{current_version=}")
+    # Bump the version
+    new_version = bump_version(current_version, bump)
+    # Update the version in the file
+    version_data["version"] = new_version
+    # Commit and tag changes
+
+    return version_data, new_version
+
+
+def main() -> None:
+    # Check for uncommitted changes
+    if has_uncommitted_changes():
+        print("Error: there are uncommitted changes in the repository")
+        exit(1)
+
+    # Parse command-line arguments
+    parser = argparse.ArgumentParser(
+        description="Git auto commit and tag with semver version bump"
+    )
+    parser.add_argument(
+        "bump",
+        choices=["major", "minor", "patch"],
+        help="the type of version bump to perform",
+    )
+
+    parser.add_argument(
+        "--version-file",
+        "-f",
+        help="the JSON or TOML file containing the current version",
+        default="package.json",
+    )
+    parser.add_argument(
+        "--version-path",
+        "-p",
+        help="the JSON or TOML file containing the current version",
+        default="version",
+    )
+    args = parser.parse_args()
+
+    file_path = args.version_file
+    match file_path.split(".")[-1].lower():
         case "json":
-            return json.loads(_file_loader(file_path))
+            version_data, new_version = run_bump(
+                load_json(file_path), args.version_path, args.bump
+            )
+            dump_json(version_data, file_path)
         case "toml":
-            return tomllib.loads(_file_loader(file_path))
+            print("Toml files are not supported (yet)")
+
+        case "yaml" | "yml":
+            print("Yaml files are not supported (yet)")
         case _:
-            print("File type not supported")
-            return None
+            print("Invalid format (json or toml supported!)")
+    # Load the current version from the file
+    print(f"{version_data=}")
+    commit_and_tag(f"Version Updated to {new_version}", f"v{new_version}")
 
 
-def update_version(sem_ver_split: list[str], update_type: UpdateType) -> list[str]:
-    final_version = sem_ver_split
-    match update_type:
-        case UpdateType.MAJOR:
-            bumpy = int(sem_ver_split[UpdateType.MAJOR.value])
-            final_version[UpdateType.MAJOR.value] = str(bumpy + 1)
-            final_version[UpdateType.MINOR.value] = "0"
-            final_version[UpdateType.PATCH.value] = "0"
-
-        case UpdateType.MINOR:
-            bumpy = int(sem_ver_split[UpdateType.MINOR.value])
-            final_version[UpdateType.MINOR.value] = str(bumpy + 1)
-            final_version[UpdateType.PATCH.value] = "0"
-
-        case update_type.PATCH:
-            bumpy = int(sem_ver_split[UpdateType.PATCH.value])
-            final_version[UpdateType.PATCH.value] = str(bumpy + 1)
-
-    return final_version
-
-
-def bump_version(
-    version_object: dict, update_type: UpdateType, write_to_disk: bool = True
-) -> Union[dict, None]:
-    version = version_object[VERSION_KEY]
-    sem_ver_split = version.split(".")
-    final_version = ".".join(update_version(sem_ver_split, update_type))
-    print(f"{version=} {final_version=}")
-    version_object[VERSION_KEY] = final_version
-    if write_to_disk:
-        write_to_file(version_object, VERSION_FILE_PATH)
-    else:
-        return version_object
-
-
-def write_to_file(version_object: dict, file_path: str) -> None:
-    with open(file_path, "w") as f:
-        f.write(json.dumps(version_object))
+if __name__ == "__main__":
+    main()
