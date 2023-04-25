@@ -56,6 +56,11 @@ semverbump -f app-version.json -p project.version minor
 - [✅] Auto Git commits and Tags
 - [❓] Add support for more file formats like YAML and TOML
 
+## Alternatives -
+
+- [verbump](https://github.com/meyt/verbump)
+- [bump2version](https://github.com/c4urself/bump2version)
+
 > Author - [Nikhil Akki](https://nikhilakki.in/about)
 
 > Personal Blog - [nikhilakki.in](https://nikhilakki.in)
