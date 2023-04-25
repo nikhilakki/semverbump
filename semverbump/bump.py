@@ -61,11 +61,6 @@ def dump_json(version_data: dict, file_name: str):
         json.dump(version_data, f)
 
 
-def dump_toml(version_data: dict, file_name: str):
-    with open(file_name, "wb") as f:
-        tomllib.dump(version_data, f)
-
-
 def get_version_from_dict(d: dict, version_path: str) -> str:
     keys = version_path.split(".")
     value = d
@@ -111,7 +106,7 @@ def main():
         "--version-path",
         "-vp",
         help="the JSON or TOML file containing the current version",
-        default="project.version",
+        default="version",
     )
     args = parser.parse_args()
 
@@ -122,7 +117,7 @@ def main():
             dump_json(version_data, version_data)
         case "toml":
             version_data = run_bump(load_toml(file_path), args.version_path, args.bump)
-            dump_toml(version_data, version_data)
+            print("Toml files are not fully supported (yet)")
         case _:
             print("Invalid format (json or toml supported!)")
     # Load the current version from the file
