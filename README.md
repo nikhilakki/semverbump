@@ -5,7 +5,6 @@
 __Currently supports__
 
 - JSON
-- TOML
 
 Example - 
 
@@ -14,13 +13,10 @@ Example -
 {
 	"version": "0.1.1"
 }
+
 ```
-- pyproject.toml
-```toml
-[tool.poetry]
-version="0.1.0"
-```
-_Caveat - version attribute should be at top level in the file._
+
+_Caveat - version attribute should be in an object and not in a list._
 
 ## Install
 

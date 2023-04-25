@@ -6,9 +6,10 @@
 import argparse
 import json
 import subprocess
+from typing import Dict, Any
 
 
-def bump_version(current_version, bump_type):
+def bump_version(current_version: str, bump_type: str) -> str:
     version_parts = [int(part) for part in current_version.split(".")]
     if bump_type == "major":
         version_parts[0] += 1
@@ -54,7 +55,7 @@ def dump_json(version_data: dict, file_name: str):
         f.write(json.dumps(version_data))
 
 
-def get_version_from_dict(d: dict, version_path: str) -> str:
+def get_version_from_dict(d: dict, version_path: str) -> Dict[str, Any]:
     keys = version_path.split(".")
     value = d
     for key in keys:
@@ -64,6 +65,7 @@ def get_version_from_dict(d: dict, version_path: str) -> str:
 
 def run_bump(version_data: dict, version_path: str, bump: str):
     current_version = get_version_from_dict(version_data, version_path)
+    print(f"{current_version=}")
     # Bump the version
     new_version = bump_version(current_version, bump)
     # Update the version in the file
@@ -75,9 +77,9 @@ def run_bump(version_data: dict, version_path: str, bump: str):
 
 def main():
     # Check for uncommitted changes
-    if has_uncommitted_changes():
-        print("Error: there are uncommitted changes in the repository")
-        exit(1)
+    # if has_uncommitted_changes():
+    #     print("Error: there are uncommitted changes in the repository")
+    #     exit(1)
 
     # Parse command-line arguments
     parser = argparse.ArgumentParser(
