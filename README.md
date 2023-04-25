@@ -48,6 +48,8 @@ semverbump -f app-version.json -p project.version minor
 ```
 
 ## Supported Runtime
+[![pypi](https://img.shields.io/pypi/pyversions/semverbump.svg)](https://pypi.python.org/pypi/semverbump)
+
 - Python 3.9+
 ## Roadmap
 - [✅] SemVer support
