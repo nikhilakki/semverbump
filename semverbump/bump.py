@@ -55,12 +55,12 @@ def dump_json(version_data: dict, file_name: str):
         f.write(json.dumps(version_data))
 
 
-def get_version_from_dict(d: dict, version_path: str) -> Dict[str, Any]:
+def get_version_from_dict(d: dict, version_path: str) -> str:
     keys = version_path.split(".")
     value = d
     for key in keys:
         value = value[key]
-    return value
+    return str(value)
 
 
 def run_bump(version_data: dict, version_path: str, bump: str):
