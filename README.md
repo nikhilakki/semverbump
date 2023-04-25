@@ -1,6 +1,6 @@
-# SemVerbump
+# SemVerBump
 
-### SemVerbump or Semantic Version Bump is a CLI tool that auto-bumps version for your application.
+### SemVerBump or Semantic Version Bump is a CLI tool that auto-bumps version (with auto git tagging and commit) for your application.
 
 __Currently supports__
 
