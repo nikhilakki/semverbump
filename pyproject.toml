@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "semverbump"
-version = "0.2.1"
+version = "0.2.2"
 description = "A CLI tool that auto-bumps version number for your app."
 authors = ["Nikhil Akki <17634231+nikhilakki@users.noreply.github.com>"]
 license = "MIT"
