@@ -33,6 +33,8 @@ semverbump patch # x.x.1
 ## Custom version file and path
 ```bash
 semverbump --version-file app-version.json --version-path project.version minor
+# or shorter version
+semverbump -f app-version.json -p project.version minor
 ```
 
 ```json
