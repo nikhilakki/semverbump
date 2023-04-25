@@ -1,13 +1,13 @@
 [tool.poetry]
 name = "semverbump"
-version = "0.1.0"
+version = "0.1.1"
 description = "A CLI tool that auto-bumps version number for your app."
 authors = ["Nikhil Akki <17634231+nikhilakki@users.noreply.github.com >"]
 license = "MIT"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.9"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -23,5 +23,9 @@ pytest-cov = "^4.0.0"
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
+[project]
+name = "semverbump"
+version = "0.1.1"
+
 [project.scripts]
-semverbump = "semverbump.cli:main"
+semverbump = "semverbump.bump:main"

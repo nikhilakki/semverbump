@@ -6,7 +6,6 @@
 import argparse
 import json
 import subprocess
-import tomllib
 
 
 def bump_version(current_version, bump_type):
@@ -47,12 +46,6 @@ def has_uncommitted_changes():
 def load_json(file_name: str):
     with open(file_name, "r") as f:
         version_data = json.load(f)
-    return version_data
-
-
-def load_toml(file_name: str):
-    with open(file_name, "r") as f:
-        version_data = tomllib.loads(f.read())
     return version_data
 
 
@@ -118,10 +111,10 @@ def main():
             )
             dump_json(version_data, file_path)
         case "toml":
-            version_data, new_version = run_bump(
-                load_toml(file_path), args.version_path, args.bump
-            )
             print("Toml files are not supported (yet)")
+
+        case "yaml" | "yml":
+            print("Yaml files are not supported (yet)")
         case _:
             print("Invalid format (json or toml supported!)")
     # Load the current version from the file
