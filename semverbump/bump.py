@@ -58,7 +58,7 @@ def load_toml(file_name: str):
 
 def dump_json(version_data: dict, file_name: str):
     with open(file_name, "w") as f:
-        json.dump(version_data, f)
+        f.write(json.dumps(version_data))
 
 
 def get_version_from_dict(d: dict, version_path: str) -> str:
