@@ -16,6 +16,11 @@ __Currently supports__
 ```
 _Caveat - version attribute should be in an object and not in a list._
 
+
+## Supported Runtime
+[![pypi](https://img.shields.io/pypi/pyversions/semverbump.svg)](https://pypi.python.org/pypi/semverbump)
+
+- Python 3.9+
 ## Install
 
 ```bash
@@ -47,10 +52,6 @@ semverbump -f app-version.json -p project.version minor
 }
 ```
 
-## Supported Runtime
-[![pypi](https://img.shields.io/pypi/pyversions/semverbump.svg)](https://pypi.python.org/pypi/semverbump)
-
-- Python 3.9+
 ## Roadmap
 - [✅] SemVer support
 - [✅] No additional dependencies (Python Standard Libary only)
