@@ -64,6 +64,11 @@ semverbump -f app-version.json -p project.version minor
 - [verbump](https://github.com/meyt/verbump)
 - [bump2version](https://github.com/c4urself/bump2version)
 
+
+### Contribution -
+Feel free to fork it, contributions are welcome!
+
+### License - [MIT](https://github.com/nikhilakki/semverbump/blob/main/LICENSE)
 > Author - [Nikhil Akki](https://nikhilakki.in/about)
 
 > Personal Blog - [nikhilakki.in](https://nikhilakki.in)
