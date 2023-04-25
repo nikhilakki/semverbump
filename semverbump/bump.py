@@ -121,7 +121,7 @@ def main():
             version_data, new_version = run_bump(
                 load_toml(file_path), args.version_path, args.bump
             )
-            print("Toml files are not fully supported (yet)")
+            print("Toml files are not supported (yet)")
         case _:
             print("Invalid format (json or toml supported!)")
     # Load the current version from the file
