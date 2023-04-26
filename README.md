@@ -57,7 +57,8 @@ semverbump -f app-version.json -p project.version minor
 - [✅] No additional dependencies (Python Standard Libary only)
 - [✅] Tested with JSON based configs, it should work with any JSON file if in the format given above.
 - [✅] Auto Git commits and Tags
-- [❓] Add support for more file formats like YAML and TOML
+- [🛠️] Add support for more file formats like YAML and TOML
+- [❓] Fully compatible with https://semver.org/ spec
 
 ## Alternatives (and probably more feature rich) -
 
