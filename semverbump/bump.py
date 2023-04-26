@@ -10,11 +10,10 @@ from typing import Dict, Any, Tuple
 
 try:
     try:
+        import tomli_w
         import tomllib as tomli
     except ModuleNotFoundError:
         import tomli
-
-    from utils import TomlWriter as tw
 
     has_toml_support = True
 
@@ -24,8 +23,8 @@ try:
         return version_data
 
     def dump_toml(version_data: Dict[str, Any], file_name: str) -> None:
-        with open(file_name, "w") as f:
-            tw.dumps(version_data, f)
+        with open(file_name, "wb") as f:
+            tomli_w.dump(version_data, f)
 
 except ModuleNotFoundError:
     has_toml_support = False
@@ -166,7 +165,7 @@ def main() -> None:
                 # commit_and_tag(f"Version Updated to {new_version}", f"v{new_version}")
             else:
                 print(
-                    "Looks like you are not using Py3.11+ run `pip install semverbump[tomli]` to add support for toml files"
+                    "Looks like you are not using Py3.11+ run `pip install semverbump[tomli,toml_w]` to add support for toml files"
                 )
         case "yaml" | "yml":
             if has_yaml_support:
