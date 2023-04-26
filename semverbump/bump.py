@@ -8,6 +8,20 @@ import json
 import subprocess
 from typing import Dict, Any, Tuple
 
+try:
+    import toml
+
+    has_toml_support = True
+except ModuleNotFoundError:
+    has_toml_support = False
+
+try:
+    import pyyaml
+
+    has_yaml_support = True
+except ModuleNotFoundError:
+    has_yaml_support = False
+
 
 def bump_version(current_version: str, bump_type: str) -> str:
     version_parts = [int(part) for part in current_version.split(".")]
