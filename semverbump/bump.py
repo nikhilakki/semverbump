@@ -9,16 +9,41 @@ import subprocess
 from typing import Dict, Any, Tuple
 
 try:
-    import toml
+    try:
+        import tomllib as tomli
+    except ModuleNotFoundError:
+        import tomli
+
+    from utils import TomlWriter as tw
 
     has_toml_support = True
+
+    def load_toml(file_name: str) -> Dict[str, Any]:
+        with open(file_name, "r") as f:
+            version_data = tomli.load(f)
+        return version_data
+
+    def dump_toml(version_data: Dict[str, Any], file_name: str) -> None:
+        with open(file_name, "w") as f:
+            tw.dumps(version_data, f)
+
 except ModuleNotFoundError:
     has_toml_support = False
 
 try:
-    import pyyaml
+    import yaml
 
     has_yaml_support = True
+
+    def load_yaml(file_name: str) -> Dict[str, Any]:
+        with open(file_name, "r") as f:
+            version_data = yaml.safe_load(f)
+        return version_data
+
+    def dump_yaml(version_data: Dict[str, Any], file_name: str) -> None:
+        with open(file_name, "w") as f:
+            yaml.safe_dump(version_data, f)
+
 except ModuleNotFoundError:
     has_yaml_support = False
 
@@ -129,12 +154,27 @@ def main() -> None:
             )
             dump_json(version_data, file_path)
         case "toml":
-            print("Toml files are not supported (yet)")
-
+            if has_toml_support:
+                version_data, new_version = run_bump(
+                    load_toml(file_path), args.version_path, args.bump
+                )
+                dump_json(version_data, file_path)
+            else:
+                print(
+                    "Run `pip install semverbump[tomli]` to add support for toml files"
+                )
         case "yaml" | "yml":
-            print("Yaml files are not supported (yet)")
+            if has_yaml_support:
+                version_data, new_version = run_bump(
+                    load_yaml(file_path), args.version_path, args.bump
+                )
+                dump_json(version_data, file_path)
+            else:
+                print(
+                    "Run `pip install semverbump[pyyaml]` to add support for yaml files"
+                )
         case _:
-            print("Invalid format (json or toml supported!)")
+            print("Invalid / un-supported file format!")
     # Load the current version from the file
     print(f"{version_data=}")
     commit_and_tag(f"Version Updated to {new_version}", f"v{new_version}")
