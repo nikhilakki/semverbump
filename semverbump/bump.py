@@ -176,7 +176,6 @@ def main() -> None:
         case _:
             print("Invalid / un-supported file format!")
     # Load the current version from the file
-    print(f"{version_data=}")
     commit_and_tag(f"Version Updated to {new_version}", f"v{new_version}")
 
 
