@@ -153,12 +153,16 @@ def main() -> None:
                 load_json(file_path), args.version_path, args.bump
             )
             dump_json(version_data, file_path)
+            # Load the current version from the file
+            commit_and_tag(f"Version Updated to {new_version}", f"v{new_version}")
         case "toml":
             if has_toml_support:
                 version_data, new_version = run_bump(
                     load_toml(file_path), args.version_path, args.bump
                 )
                 dump_json(version_data, file_path)
+                # Load the current version from the file
+                commit_and_tag(f"Version Updated to {new_version}", f"v{new_version}")
             else:
                 print(
                     "Run `pip install semverbump[tomli]` to add support for toml files"
@@ -169,14 +173,14 @@ def main() -> None:
                     load_yaml(file_path), args.version_path, args.bump
                 )
                 dump_json(version_data, file_path)
+                # Load the current version from the file
+                commit_and_tag(f"Version Updated to {new_version}", f"v{new_version}")
             else:
                 print(
                     "Run `pip install semverbump[pyyaml]` to add support for yaml files"
                 )
         case _:
             print("Invalid / un-supported file format!")
-    # Load the current version from the file
-    commit_and_tag(f"Version Updated to {new_version}", f"v{new_version}")
 
 
 if __name__ == "__main__":
