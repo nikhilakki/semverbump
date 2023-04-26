@@ -59,8 +59,9 @@ semverbump -f app-version.json -p project.version minor
 - [✅] Auto Git commits and Tags
 - [❓] Add support for more file formats like YAML and TOML
 
-## Alternatives -
+## Alternatives (and probably more feature rich) -
 
+- [semver](https://github.com/python-semver/python-semver)
 - [verbump](https://github.com/meyt/verbump)
 - [bump2version](https://github.com/c4urself/bump2version)
 
