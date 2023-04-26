@@ -165,7 +165,7 @@ def main() -> None:
                 commit_and_tag(f"Version Updated to {new_version}", f"v{new_version}")
             else:
                 print(
-                    "Run `pip install semverbump[tomli]` to add support for toml files"
+                    "Looks like you are not using Py3.11+ run `pip install semverbump[tomli]` to add support for toml files"
                 )
         case "yaml" | "yml":
             if has_yaml_support:
