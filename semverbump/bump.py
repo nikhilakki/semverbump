@@ -19,7 +19,7 @@ try:
     has_toml_support = True
 
     def load_toml(file_name: str) -> Dict[str, Any]:
-        with open(file_name, "r") as f:
+        with open(file_name, "rb") as f:
             version_data = tomli.load(f)
         return version_data
 
@@ -118,9 +118,9 @@ def run_bump(
 
 def main() -> None:
     # Check for uncommitted changes
-    if has_uncommitted_changes():
-        print("Error: there are uncommitted changes in the repository")
-        exit(1)
+    # if has_uncommitted_changes():
+    #     print("Error: there are uncommitted changes in the repository")
+    #     exit(1)
 
     # Parse command-line arguments
     parser = argparse.ArgumentParser(
@@ -154,15 +154,16 @@ def main() -> None:
             )
             dump_json(version_data, file_path)
             # Load the current version from the file
-            commit_and_tag(f"Version Updated to {new_version}", f"v{new_version}")
+            # commit_and_tag(f"Version Updated to {new_version}", f"v{new_version}")
         case "toml":
             if has_toml_support:
+                print(f"{has_toml_support}")
                 version_data, new_version = run_bump(
                     load_toml(file_path), args.version_path, args.bump
                 )
-                dump_json(version_data, file_path)
+                dump_toml(version_data, file_path)
                 # Load the current version from the file
-                commit_and_tag(f"Version Updated to {new_version}", f"v{new_version}")
+                # commit_and_tag(f"Version Updated to {new_version}", f"v{new_version}")
             else:
                 print(
                     "Looks like you are not using Py3.11+ run `pip install semverbump[tomli]` to add support for toml files"
@@ -172,9 +173,9 @@ def main() -> None:
                 version_data, new_version = run_bump(
                     load_yaml(file_path), args.version_path, args.bump
                 )
-                dump_json(version_data, file_path)
+                dump_yaml(version_data, file_path)
                 # Load the current version from the file
-                commit_and_tag(f"Version Updated to {new_version}", f"v{new_version}")
+                # commit_and_tag(f"Version Updated to {new_version}", f"v{new_version}")
             else:
                 print(
                     "Run `pip install semverbump[pyyaml]` to add support for yaml files"
